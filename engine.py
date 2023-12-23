@@ -2,6 +2,9 @@ import json
 import os, sys
 import time
 from colorama import Fore, Style, init
+
+
+
 """
     CONSOLE
 
@@ -14,8 +17,18 @@ class CONSOLE():
         self.__html_pages = {}
         self.__preattify = True# SET PRETIFIE
         self.__search_margin = 100
+        
+        # check for system , to handle the path formating
+        self.__path_formater = '/'
+        if sys.platform.startswith('win'):
+            self.__path_formater = "\\"
+        elif not sys.platform.startswith('linux'):
+            print("[!] May not work on this system", file=sys.stdout)
+            input("Return to continue")
+
         # check directories and load templates
         self.__directory_checker()
+        
 
     
     def __help(self):
@@ -104,7 +117,7 @@ class CONSOLE():
                 after checking if the dirs are set
         """
         # list of two paths , 1> html_pages 2> templates
-        paths = [current_path+"/html_pages", current_path+"/templates"]
+        paths = [current_path+self.__path_formater+"html_pages", current_path+self.__path_formater+"templates"]
         
         for path in range(len(paths)):
             # get all files iside of the path
@@ -116,9 +129,9 @@ class CONSOLE():
                 if (splited_file_name[1] == "html"):
 
                     if (path == 0):# if we're loading the html_pages
-                        self.__html_pages[splited_file_name[0]] = f"{current_path}/html_pages/{file}"
+                        self.__html_pages[splited_file_name[0]] = f"{current_path}{self.__path_formater}html_pages{self.__path_formater}{file}"
                     elif (path == 1):# if we're loading the templates
-                        self.__templates[splited_file_name[0]] = f"{current_path}/templates/{file}"
+                        self.__templates[splited_file_name[0]] = f"{current_path}{self.__path_formater}templates{self.__path_formater}{file}"
 
     def __render(self):
         # start a time to log to the user how mush time the render took
@@ -168,7 +181,7 @@ class CONSOLE():
 
                             
                                 
-                            with open(f"templates/{template_name}.html", 'r') as template:
+                            with open(f"templates{self.__path_formater}{template_name}.html", 'r') as template:
                                 # load the template into it's respected line
                                 # with respect to how many spaces we've found "{"
 
