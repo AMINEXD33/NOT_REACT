@@ -1,7 +1,7 @@
 import json
 import os, sys
 import time
-from colorama import Fore, Style, init
+
 
 
 
@@ -78,9 +78,10 @@ class CONSOLE():
         dirs = ("html_pages","templates") 
         # the path the script is currently runing on
         path = (os.getcwd())
+        print("the path >>> ", path)
         # a list of all files/directories in the path
         dir_list = os.listdir(path)
-
+        print("dir list",dir_list)
         # check for the needed files
         dir1_found = False
         dir2_found = False
@@ -189,7 +190,7 @@ class CONSOLE():
                                 # with respect to how many spaces we've found "{"
                                 template_content = template.read().strip('\n')
 
-                                # if preattify is false, then load the template as a one liner
+                                # if preattify is false, then load the template as oneliner
                                 if not self.__preattify:
                                     lines[target_line] = (" " * (start-1)) + template_content.strip('\n') + '\n'
                                 elif self.__preattify:
@@ -198,29 +199,13 @@ class CONSOLE():
             with open(f"{html_page}.html", 'w') as file:
                 file.writelines(lines)
                 file.truncate()
+                file.close()
 
         end_time = time.time()
-        # Initialize colorama
-        init(autoreset=True)
+
         print("[RENDER RUNTIME]",(end_time-start_time) * 10**3,"ms", file=sys.stdout)
 
 
-
-                            
-                    
-                
-                
-
-
-
-
-
-
-
-
-
-
-        
         
     def run_console(self):
         mapper = {
