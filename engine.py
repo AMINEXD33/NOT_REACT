@@ -18,7 +18,7 @@ class CONSOLE():
         self.__files_time_stamp = {}
         self.__preattify = True# SET PRETIFIE
         self.__search_margin = 100
-        
+        self._msg_stack = []
         # check for system , to handle the path formating
         self.__path_formater = '/'
         if sys.platform.startswith('win'):
@@ -26,6 +26,7 @@ class CONSOLE():
         elif not sys.platform.startswith('linux'):
             print("[!] May not work on this system", file=sys.stdout)
             input("Return to continue")
+
 
         # check directories and load templates
         self.__directory_checker()
@@ -35,6 +36,7 @@ class CONSOLE():
         self._th = threading.Thread(target=self.auto_render_)
         # start thread at the initialization of the object
         self._th.start()
+
     def auto_render_(self):
         """auto_render_
             auto render is the function that will be called by the auto reload
@@ -42,16 +44,15 @@ class CONSOLE():
         :return: None
         """
         while self.__thread_exit_Flag is False:
-            time.sleep(5)  # cycle every (sec)
+            time.sleep(1)  # cycle every (sec)
 
             # well since self.... is a reference to a chunk of memory it wouldn't make
             # any sense to keep referencing the same snapshot of it , this is why we need a copy
             # of that chunk at every cycle
             tmp_curr_timestamp = copy.copy(self.__files_time_stamp)
-
+            
             # reload files
             self.__reloadall()
-
             # if the two dicts are not the same , a file has been changed
             if (tmp_curr_timestamp != self.__files_time_stamp):
                 # trigger re rendering
@@ -59,7 +60,7 @@ class CONSOLE():
 
     def __help(self):
         commands_help = {
-            "clear":"Clear console",
+            "cl":"Clear console",
             "render":"Render all_files",
             "reloadall":"reaload all <template.html> into memorie",
             "show": "show loaded html files from templates",
@@ -222,7 +223,8 @@ class CONSOLE():
 
         end_time = time.time()
 
-        print("[RENDER RUNTIME]",(end_time-start_time) * 10**3,"ms", file=sys.stdout)
+        # add message to the message stack
+        self._msg_stack.append("[RENDER RUNTIME]"+str((end_time-start_time) * 10**3)+"ms")
 
     """THE CONSOLE LOGIC"""
     def run_console(self):
@@ -232,10 +234,14 @@ class CONSOLE():
             "reloadall": self.__reloadall,
             "exit": self.__exit,
             "render": self.__render,
-            "help":self.__help
+            "help":self.__help,
         }
 
         while (True):
+            for x in self._msg_stack:
+                print (x)
+                self._msg_stack = []
+
             prompt = input("[console]$ ")
             
             if (prompt in mapper):
@@ -247,12 +253,7 @@ class CONSOLE():
     def __clear(self):
         try:
             os.system("clear")
-            return
-        except:
-            pass
-
-        try:
-            os.system("clear")
+            os.system("cls")
             return
         except:
             pass

@@ -4,64 +4,247 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
     <title>NOT REACT</title>
 </head>
 <body>
     <!--INJECT THE navbar TAMPLATE HERE-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+    <nav class="navbar navbar-expand-lg">
+  <div class="container-fluid" style="display: flex; flex-direction: column; width: 100%; padding: 0;">
+
+      <!---TOP PAGE LOGO AND TITLE-->
+      <div class="row py-4" style="width: 100%;">
+      
+          <!---lOGO-->
+          <div class="col-md-2" style="padding: 0;">
+              <a href="#" class="navbar-brand  custom_brand">
+                  <img src="./tn_ofppt_gfogb.webp" alt="OFPPT LOGO" style="width: 100px;">
+              </a>
+          </div>
+      
+          <!--title-->
+          <div class="col-md custom_brand">
+              <h1>Option de secteur digital</h1>
+          </div>
+
+      
       </div>
-    </div>
+
+      <!---NAV BAR-->
+      <div class="row" style="width: 100%;">
+          <button class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="targetednav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="col-md p-0">
+              <div class="collapse navbar-collapse custom_navbare" id="targetednav">
+                  <ul class="navbar-nav">
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">
+                              <img src="photo_svg.svg" alt="home_icon" style="width: 40px; height: 40px">
+                          </a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link active mx-2">Accueil</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">A propos du Developpement digital</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">Formation initial</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">Espace stagiaire</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+  </div>
 </nav>
 
-    <h1> !(REACT)</h1>
+    <!--INJECT THE BODY CONTENT-->
+    <section>
+    <div class="container-fluid">
+        <div class="row  fluid_container_for_ships">
+            <div class="col-lg-3">
+                <div class="container">
+                    <div class="card card_costume_style p-3" style="min-width: 200px; height: 450px;">
+                        <form action="#" method="post">
+                            <div class="row" >
+                                <div class="col-md">
+                                    <h2>Connecxion</h2>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="form-goupe">
+                                    <label class="form-label" for="em">Email</label>
+                                    <input class="form-control" type="email" name="email" id="em" required>
+                                </div>
+                                <div class="form-goupe">
+                                    <label class="form-label" for="passwd">Mot de pass</label>
+                                    <input class="form-control" type="password" name="pass" id="passwd">
+                                </div>
+                            </div>
 
-    <!--INJECT THE list TEMPLATE HERE-->
-    <ul class="list-group">
-    <li class="list-group-item">A horse walked </li>
-    <li class="list-group-item">Into a bar</li>
-    <li class="list-group-item">the bar tender saw him</li>
-    <li class="list-group-item">and said</li>
-    <li class="list-group-item">why the long face</li>
-</ul>
-    <ul class="list-group">
-    <li class="list-group-item">A horse walked </li>
-    <li class="list-group-item">Into a bar</li>
-    <li class="list-group-item">the bar tender saw him</li>
-    <li class="list-group-item">and said</li>
-    <li class="list-group-item">why the long face</li>
-</ul>
+                            <div class="row">
+                                <div class="form-goupe">
+                                    <button type="submit" class="btn btn-primary">Connecxion</button>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-goupe">
+                                    <a href="#" class="link"> Veillez se sinscrire?</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <a href="#" class="link"> Mot de pass oublier?</a>
+                            </div>
+                        </form>
+        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="container">
+                    <div class="card card_costume_style p-3"style="min-width: 200px; height: 450px;">
+                        <div class="row">
+                            <h2>DDDDOD</h2>
+                        </div>
+                        <div class="row">
+                            <p>Develpmsad Digital ablablabla</p>
+                        </div>
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="col-lg-3">
+                <div class="container">
+                    <div class="card card_costume_style p-3"style="min-width: 200px; height: 450px;">
+                        <div class="row">
+                            <h2>DDDDOD</h2>
+                        </div>
+                        <div class="row">
+                            <p>Develpmsad Digital ablablabla</p>
+                        </div>
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu</a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 ">
+                <div class="container">
+                    <div class="card card_costume_style p-3" style="min-width: 200px; height: 450px;">
+                        <div class="row">
+                            <h2>DDDDOD</h2>
+                        </div>
+                        <div class="row">
+                            <p>Develpmsad Digital ablablabla</p>
+                        </div>
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="container">
+                                <a  class="btn btn-primary" href="#">Lorem asdiu </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <!--INJECT FO  OTER -->
+    <footer class="footer_custom">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid" style="display: flex; flex-direction: column; width: 100%; padding: 0;">
+            <div class="row" style="width: 100%;">
+                <div class="col-md"  style="padding: 0;">
+                    <div class="custom_navbare" id="targetednav">
+                        <ul class="navbar-nav">
+                            <li class="navbar-item">
+                                <a href="#" class="navbar-link active mx-2">Plan de site</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a href="#" class="navbar-link mx-2">contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

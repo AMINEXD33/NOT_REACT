@@ -1,36 +1,57 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid" style="display: flex; flex-direction: column; width: 100%; padding: 0;">
+
+      <!---TOP PAGE LOGO AND TITLE-->
+      <div class="row py-4" style="width: 100%;">
+      
+          <!---lOGO-->
+          <div class="col-md-2" style="padding: 0;">
+              <a href="#" class="navbar-brand  custom_brand">
+                  <img src="./tn_ofppt_gfogb.webp" alt="OFPPT LOGO" style="width: 100px;">
+              </a>
+          </div>
+      
+          <!--title-->
+          <div class="col-md custom_brand">
+              <h1>Option de secteur digital</h1>
+          </div>
+
+      
       </div>
-    </div>
+
+      <!---NAV BAR-->
+      <div class="row" style="width: 100%;">
+          <button class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="targetednav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="col-md p-0">
+              <div class="collapse navbar-collapse custom_navbare" id="targetednav">
+                  <ul class="navbar-nav">
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">
+                              <img src="photo_svg.svg" alt="home_icon" style="width: 40px; height: 40px">
+                          </a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link active mx-2">Accueil</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">A propos du Developpement digital</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">Formation initial</a>
+                      </li>
+                      <li class="navbar-item">
+                          <a href="#" class="navbar-link mx-2">Espace stagiaire</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+  </div>
 </nav>
