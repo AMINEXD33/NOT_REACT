@@ -224,7 +224,6 @@ class CONSOLE():
 
         print("[RENDER RUNTIME]",(end_time-start_time) * 10**3,"ms", file=sys.stdout)
 
-
     """THE CONSOLE LOGIC"""
     def run_console(self):
         mapper = {
@@ -237,12 +236,13 @@ class CONSOLE():
         }
 
         while (True):
-            prompt = input("$ ")
+            prompt = input("[console]$ ")
             
             if (prompt in mapper):
                 mapper[prompt.strip()]()
             else:
                 print ("[-] command not found  , type help to see availble commands", file=sys.stdout)
+
     """HERE IS THE CONSOLE FUNCTION"""
     def __clear(self):
         try:
@@ -272,5 +272,31 @@ class CONSOLE():
         sys.exit(0)
 
 
-CONSOL = CONSOLE()
-CONSOL.run_console()
+
+
+if __name__ == "__main__":
+    print("""
+
+     ███▄    █ ▒█████  ▄▄▄█████▓              
+     ██ ▀█   █▒██▒  ██▒▓  ██▒ ▓▒              
+    ▓██  ▀█ ██▒██░  ██▒▒ ▓██░ ▒░              
+    ▓██▒  ▐▌██▒██   ██░░ ▓██▓ ░               
+    ▒██░   ▓██░ ████▓▒░  ▒██▒ ░               
+    ░ ▒░   ▒ ▒░ ▒░▒░▒░   ▒ ░░                 
+    ░ ░░   ░ ▒░ ░ ▒ ▒░     ░                  
+       ░   ░ ░░ ░ ░ ▒    ░                    
+             ░    ░ ░                         
+
+     ██▀███  ▓█████ ▄▄▄      ▄████▄  ▄▄▄█████▓
+    ▓██ ▒ ██▒▓█   ▀▒████▄   ▒██▀ ▀█  ▓  ██▒ ▓▒
+    ▓██ ░▄█ ▒▒███  ▒██  ▀█▄ ▒▓█    ▄ ▒ ▓██░ ▒░
+    ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██▒▓▓▄ ▄██▒░ ▓██▓ ░ 
+    ░██▓ ▒██▒░▒████▒▓█   ▓██▒ ▓███▀ ░  ▒██▒ ░ 
+    ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░ ░▒ ▒  ░  ▒ ░░   
+      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░ ░  ▒       ░    
+      ░░   ░    ░    ░   ▒  ░          ░      
+       ░        ░  ░     ░  ░ ░               
+                            ░ 
+    """)
+    CONSOL = CONSOLE()
+    CONSOL.run_console()
