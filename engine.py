@@ -1,8 +1,8 @@
-import json
+import copy
 import os, sys
 import time
-
-
+import threading
+import datetime
 
 
 """
@@ -15,6 +15,7 @@ class CONSOLE():
     def __init__(self):
         self.__templates = {}
         self.__html_pages = {}
+        self.__files_time_stamp = {}
         self.__preattify = True# SET PRETIFIE
         self.__search_margin = 100
         
@@ -28,9 +29,34 @@ class CONSOLE():
 
         # check directories and load templates
         self.__directory_checker()
-        
+        # thread exit flag
+        self.__thread_exit_Flag = False
+        # auto reload thread
+        self._th = threading.Thread(target=self.auto_render_)
+        # start thread at the initialization of the object
+        self._th.start()
+    def auto_render_(self):
+        """auto_render_
+            auto render is the function that will be called by the auto reload
+            thread.
+        :return: None
+        """
+        while self.__thread_exit_Flag is False:
+            time.sleep(5)  # cycle every (sec)
 
-    
+            # well since self.... is a reference to a chunk of memory it wouldn't make
+            # any sense to keep referencing the same snapshot of it , this is why we need a copy
+            # of that chunk at every cycle
+            tmp_curr_timestamp = copy.copy(self.__files_time_stamp)
+
+            # reload files
+            self.__reloadall()
+
+            # if the two dicts are not the same , a file has been changed
+            if (tmp_curr_timestamp != self.__files_time_stamp):
+                # trigger re rendering
+                self.__render()
+
     def __help(self):
         commands_help = {
             "clear":"Clear console",
@@ -43,29 +69,6 @@ class CONSOLE():
         for key, value in commands_help.items():
             print(f"{key} :  {value}"+"\n", file=sys.stdout)
         print("++++++++++++++++++++++++++++++++++", file=sys.stdout)
-    def __clear(self):
-        try:
-            os.system("clear")
-            return
-        except:
-            pass
-
-        try:
-            os.system("clear")
-            return
-        except:
-            pass
-    def __showloaded(self):
-        for file in self.__templates.keys():
-            print(file, file=sys.stdout)
-    def __reloadall(self):
-        # flush dict
-        self.__templates = {}
-        # reaload all
-        self.__directory_checker()
-    def __exit(self):
-        print("SEE YA !", file=sys.stdout)
-        sys.exit(0)
 
 
     def __directory_checker(self):
@@ -74,14 +77,20 @@ class CONSOLE():
             to function.
         """
 
+        # empty all dicts at every render for realtime file tracking
+        self.__Template_files_time_stamp, self.__Html_files_time_stamp = {},{}
+        self.__html_pages = {}
+        self.__templates = {}
+
+
         # list of needed directories
         dirs = ("html_pages","templates") 
-        # the path the script is currently runing on
+        # the path the script is currently running on
         path = (os.getcwd())
-        print("the path >>> ", path)
+
         # a list of all files/directories in the path
         dir_list = os.listdir(path)
-        print("dir list",dir_list)
+
         # check for the needed files
         dir1_found = False
         dir2_found = False
@@ -111,7 +120,7 @@ class CONSOLE():
     def __load_render_list(self, current_path):
         """__load_render_list
 
-            - load files from the templates directory, into memorie (dict)
+            - load files from the templates directory, into memory (dict)
 
             ARGS:
                 current_path: the path passed by the __directory_checker
@@ -121,27 +130,37 @@ class CONSOLE():
         paths = [current_path+self.__path_formater+"html_pages", current_path+self.__path_formater+"templates"]
         
         for path in range(len(paths)):
-            # get all files iside of the path
+            # get all files in the path
             dir_list = os.listdir(paths[path])
             for file in dir_list:
 
-                # only load files with html extention
+                # only load files with html extension
                 splited_file_name = file.split('.') # example  index.html > ["index", "html"]
                 if (splited_file_name[1] == "html"):
 
                     if (path == 0):# if we're loading the html_pages
-                        self.__html_pages[splited_file_name[0]] = f"{current_path}{self.__path_formater}html_pages{self.__path_formater}{file}"
-                    elif (path == 1):# if we're loading the templates
-                        self.__templates[splited_file_name[0]] = f"{current_path}{self.__path_formater}templates{self.__path_formater}{file}"
+                        file_full_path = f"{current_path}{self.__path_formater}html_pages{self.__path_formater}{file}"
+                        self.__html_pages[splited_file_name[0]] = file_full_path
+                        # get time stamp of the file
 
-    def __render(self):
+                        self.__files_time_stamp[splited_file_name[0]] = round(os.path.getmtime(file_full_path), 2)
+
+                    elif (path == 1):# if we're loading the templates
+                        file_full_path = f"{current_path}{self.__path_formater}templates{self.__path_formater}{file}"
+                        self.__templates[splited_file_name[0]] = file_full_path
+                        # get time stamp of the file
+
+                        self.__files_time_stamp[splited_file_name[0]] = round(os.path.getmtime(file_full_path), 2)
+
+    def __render(self, *skip_list):
         # start a time to log to the user how mush time the render took
         start_time = time.time()
 
-
-
         # render each html_page
         for html_page, page_path in self.__html_pages.items():
+
+            if (html_page in skip_list): break
+
             lines = None
             with open(f"{page_path}" , "r+") as page:
                 lines = page.readlines()
@@ -205,8 +224,7 @@ class CONSOLE():
 
         print("[RENDER RUNTIME]",(end_time-start_time) * 10**3,"ms", file=sys.stdout)
 
-
-        
+    """THE CONSOLE LOGIC"""
     def run_console(self):
         mapper = {
             "clear" : self.__clear,
@@ -218,15 +236,67 @@ class CONSOLE():
         }
 
         while (True):
-            prompt = input("$ ")
+            prompt = input("[console]$ ")
             
             if (prompt in mapper):
                 mapper[prompt.strip()]()
             else:
                 print ("[-] command not found  , type help to see availble commands", file=sys.stdout)
-        
+
+    """HERE IS THE CONSOLE FUNCTION"""
+    def __clear(self):
+        try:
+            os.system("clear")
+            return
+        except:
+            pass
+
+        try:
+            os.system("clear")
+            return
+        except:
+            pass
+    def __showloaded(self):
+        for file in self.__templates.keys():
+            print(file, file=sys.stdout)
+    def __reloadall(self):
+        # flush dict
+        self.__templates = {}
+        # reaload all
+        self.__directory_checker()
+    def __exit(self):
+        print("SEE YA !", file=sys.stdout)
+        # signal to the thread to end
+        self.__thread_exit_Flag = True
+        self._th.join()
+        sys.exit(0)
 
 
 
-CONSOL = CONSOLE()
-CONSOL.run_console()
+
+if __name__ == "__main__":
+    print("""
+
+     ███▄    █ ▒█████  ▄▄▄█████▓              
+     ██ ▀█   █▒██▒  ██▒▓  ██▒ ▓▒              
+    ▓██  ▀█ ██▒██░  ██▒▒ ▓██░ ▒░              
+    ▓██▒  ▐▌██▒██   ██░░ ▓██▓ ░               
+    ▒██░   ▓██░ ████▓▒░  ▒██▒ ░               
+    ░ ▒░   ▒ ▒░ ▒░▒░▒░   ▒ ░░                 
+    ░ ░░   ░ ▒░ ░ ▒ ▒░     ░                  
+       ░   ░ ░░ ░ ░ ▒    ░                    
+             ░    ░ ░                         
+
+     ██▀███  ▓█████ ▄▄▄      ▄████▄  ▄▄▄█████▓
+    ▓██ ▒ ██▒▓█   ▀▒████▄   ▒██▀ ▀█  ▓  ██▒ ▓▒
+    ▓██ ░▄█ ▒▒███  ▒██  ▀█▄ ▒▓█    ▄ ▒ ▓██░ ▒░
+    ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██▒▓▓▄ ▄██▒░ ▓██▓ ░ 
+    ░██▓ ▒██▒░▒████▒▓█   ▓██▒ ▓███▀ ░  ▒██▒ ░ 
+    ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░ ░▒ ▒  ░  ▒ ░░   
+      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░ ░  ▒       ░    
+      ░░   ░    ░    ░   ▒  ░          ░      
+       ░        ░  ░     ░  ░ ░               
+                            ░ 
+    """)
+    CONSOL = CONSOLE()
+    CONSOL.run_console()
