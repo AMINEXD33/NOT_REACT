@@ -44,7 +44,7 @@ exit :  exit the console
 
 ```
 
-#### now , let's talk about the `render` command and it will do but first how to use NOT REACT.
+#### now , let's talk about the `render` command and what it will do , but first how to use NOT REACT.
 
 # 1) Create an html page in the `html_page` folder
 ## note you can create as many pages as you like to
